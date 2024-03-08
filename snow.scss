@@ -1,0 +1,45 @@
+@for $i from 1 through 200 {
+  // 第i个雪花div
+  .snow:nth-child(#{$i}) {
+    .snow {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-image: url("./flower.png");
+      background-size: cover;
+    }
+  }
+}
+
+.snow {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-image: url("./flower.png");
+  background-size: cover;
+}
+
+@keyframes move1{
+  0%{
+      // top: 0;
+      // left: var(--left-ini);
+      transform: translate(var(--left-ini),-5vh) scale(var(--size));
+  }
+
+  100%{
+      // top: 100vh;
+      // left: var(--left-end);
+      transform: translate(var(--left-end),100vh);
+  }
+}
+
+@for $i from 1 through 200 {
+  .snow:nth-child(#{$i}) {
+      --left-ini: #{random(20) - 10}vw;
+      --left-end: #{random(20) - 10}vw;
+      --size: #{random(3)};
+      // top: -5vh; // 不用top的原因，就是为了不使初始状态时，空间的某块行区域是空白的，不好看，直接用y位移就可以根据时间的随机性，让空间的同时刻每一行都能含有雪花
+      left: #{random(100)}vw; // 从原来的位置左右移动一点点距离，如果直接使用left当位移点，移动的跨幅太大了，不好看
+      animation: move1 #{8 + random(20)}s linear -#{random(10)}s infinite; // 用了延时，就是为了能有一运行代码就能提前有雪花出现在页面上
+  }
+}
